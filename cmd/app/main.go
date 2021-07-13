@@ -1,6 +1,12 @@
+// Fetch the latest posts from an Instagram channel and
+// send them to a Telegram channel.
+// It keeps track of sent posts so you dont have to worry about repeat stuff.
+// Run this as a system service as it fetches new posts after <your set interval>.
+
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"sync"
@@ -46,7 +52,7 @@ func work(app *config.Application) {
 		log.Fatalln(err)
 	}
 
-	latest.Next()
+	latest.Next(false)
 	for i := len(latest.Items) - 1; i >= 0; i-- {
 		item := latest.Items[i]
 
@@ -67,7 +73,13 @@ func work(app *config.Application) {
 				return
 			}
 
-			imgdl, viddl, err := item.Download(app.Config.TempMediaPath, item.Code)
+			ext := ".jpg"
+			if item.MediaToString() == "video" {
+				ext = ".mp4"
+			}
+
+			// Note that this does not download instagram carousel images.
+			imgdl, viddl, err := item.Download(app.Config.TempMediaPath, fmt.Sprint(itemCode, ext))
 			app.Logger.Println("Download Log.", "Img - ", imgdl, "Vid - ", viddl, "Err - ", err)
 
 			if err == nil {
@@ -89,6 +101,8 @@ func work(app *config.Application) {
 					}
 				}
 			}
+
+			// Delete stuff if you want, but I like to leave it as it is.
 
 			// release semaphore
 			<-sem
