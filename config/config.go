@@ -8,6 +8,7 @@ const Version = "1.0.0"
 type Config struct {
 	InstagramUsername string
 	InstagramPassword string
+	InstagramChannel  string
 	TelegramBotToken  string
 	TelegramChannel   int64
 	DatabasePath      string // boltDB location
@@ -18,12 +19,16 @@ type Config struct {
 func GetConfig() Config {
 	var cfg Config
 
-	flag.StringVar(&cfg.InstagramUsername, "iguser", "", "Instagram Username")
-	flag.StringVar(&cfg.InstagramPassword, "igpass", "", "Instagram Password")
+	flag.StringVar(&cfg.InstagramUsername, "iguser", "", "Your Instagram Username")
+	flag.StringVar(&cfg.InstagramPassword, "igpass", "", "Your Instagram Password")
+	flag.StringVar(&cfg.InstagramChannel, "igchan", "", "Instagram Channel's Username")
 	flag.StringVar(&cfg.TelegramBotToken, "tgtoken", "", "Telegram Bot Token")
 	flag.Int64Var(&cfg.TelegramChannel, "tgchannel", 0, "Telegram Channel ID")
 
 	flag.Parse()
+
+	cfg.DatabasePath = "./store.boltdb"
+	cfg.TempMediaPath = "./tmpdl"
 
 	return cfg
 }
