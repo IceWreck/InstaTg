@@ -13,6 +13,7 @@ type Config struct {
 	TelegramChannel   int64
 	DatabasePath      string // boltDB location
 	TempMediaPath     string // temporary photo/video storage location
+	ReRunInterval     int64  // in minutes
 }
 
 // GetConfig from command line flags
@@ -25,6 +26,7 @@ func GetConfig() Config {
 	flag.StringVar(&cfg.TelegramBotToken, "tgtoken", "", "Telegram Bot Token")
 	flag.Int64Var(&cfg.TelegramChannel, "tgchannel", 0, "Telegram Channel ID")
 	flag.StringVar(&cfg.DatabasePath, "dbpath", "./store.boltdb", "Database File Path (optional)")
+	flag.Int64Var(&cfg.ReRunInterval, "rerun", 15, "Interval (in minutes) after which the bot shoudl check IG for more posts")
 
 	flag.Parse()
 

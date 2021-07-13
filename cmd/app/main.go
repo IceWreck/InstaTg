@@ -10,6 +10,7 @@ import (
 	"log"
 	"os"
 	"sync"
+	"time"
 
 	"github.com/IceWreck/InstaTG/config"
 	"github.com/IceWreck/InstaTG/instagram"
@@ -40,6 +41,17 @@ func main() {
 	instagram.ConnectionCheck(app)
 
 	work(app)
+
+	ticker := time.NewTicker(time.Minute * time.Duration(app.Config.ReRunInterval))
+	defer ticker.Stop()
+	for {
+		select {
+		case t := <-ticker.C:
+			app.Logger.Println("Tick at: ", t)
+			work(app)
+		}
+	}
+
 }
 
 func work(app *config.Application) {
