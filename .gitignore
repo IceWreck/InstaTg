@@ -3,3 +3,4 @@ config.env
 samples
 Makefile
 tmpdl
+store.boltdb

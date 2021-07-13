@@ -24,10 +24,10 @@ func GetConfig() Config {
 	flag.StringVar(&cfg.InstagramChannel, "igchan", "", "Instagram Channel's Username")
 	flag.StringVar(&cfg.TelegramBotToken, "tgtoken", "", "Telegram Bot Token")
 	flag.Int64Var(&cfg.TelegramChannel, "tgchannel", 0, "Telegram Channel ID")
+	flag.StringVar(&cfg.DatabasePath, "dbpath", "./store.boltdb", "Database File Path (optional)")
 
 	flag.Parse()
 
-	cfg.DatabasePath = "./store.boltdb"
 	cfg.TempMediaPath = "./tmpdl"
 
 	return cfg
