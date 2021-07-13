@@ -50,7 +50,7 @@ func work(app *config.Application) {
 
 	latest, err := instagram.GetFeed(app)
 	if err != nil {
-		log.Fatalln(err)
+		log.Panicln(err)
 	}
 
 	for latest.Next(false) {

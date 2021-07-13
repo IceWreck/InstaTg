@@ -48,6 +48,11 @@ func main() {
 		select {
 		case t := <-ticker.C:
 			app.Logger.Println("Tick at: ", t)
+
+			// Check connection at every tick.
+			telegram.ConnectionCheck(app)
+			instagram.ConnectionCheck(app)
+
 			work(app)
 		}
 	}
@@ -61,7 +66,7 @@ func work(app *config.Application) {
 
 	latest, err := instagram.GetFeed(app)
 	if err != nil {
-		log.Fatalln(err)
+		log.Panicln(err)
 	}
 
 	latest.Next(false)

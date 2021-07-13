@@ -12,7 +12,9 @@ func ConnectionCheck(app *config.Application) error {
 	if err == nil {
 		app.Logger.Println("Instagram authenticated. Username: ", user)
 	} else {
-		app.Logger.Println("Instagram authentication error: ", err)
+		// Panic is intentional because we dont want it to try making requests if it fails.
+		// And if connection loss is just temporary, then systemd will restart anyways.
+		app.Logger.Panicln("Instagram authentication error: ", err)
 	}
 	return err
 }
@@ -21,7 +23,7 @@ func NewConnection(app *config.Application) *goinsta.Instagram {
 	insta := goinsta.New(app.Config.InstagramUsername, app.Config.InstagramPassword)
 	err := insta.Login()
 	if err != nil {
-		app.Logger.Fatalln("Instagram API connection error: ", err)
+		app.Logger.Panicln("Instagram API connection error: ", err)
 	}
 	return insta
 }

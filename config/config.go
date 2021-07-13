@@ -26,7 +26,7 @@ func GetConfig() Config {
 	flag.StringVar(&cfg.TelegramBotToken, "tgtoken", "", "Telegram Bot Token")
 	flag.Int64Var(&cfg.TelegramChannel, "tgchannel", 0, "Telegram Channel ID")
 	flag.StringVar(&cfg.DatabasePath, "dbpath", "./store.boltdb", "Database File Path (optional)")
-	flag.Int64Var(&cfg.ReRunInterval, "rerun", 15, "Interval (in minutes) after which the bot shoudl check IG for more posts")
+	flag.Int64Var(&cfg.ReRunInterval, "rerun", 15, "Interval (in minutes) after which the bot should check IG for more posts")
 
 	flag.Parse()
 

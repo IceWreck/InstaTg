@@ -13,7 +13,7 @@ import (
 func NewConnection(app *config.Application) *bolt.DB {
 	db, err := bolt.Open(app.Config.DatabasePath, 0600, nil)
 	if err != nil {
-		app.Logger.Fatalln("Failed to open db ", err)
+		app.Logger.Panicln("Failed to open db ", err)
 	}
 	db.Update(func(tx *bolt.Tx) error {
 		b, err := tx.CreateBucketIfNotExists([]byte("instatg"))

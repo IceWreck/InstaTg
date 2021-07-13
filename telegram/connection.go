@@ -10,7 +10,9 @@ func ConnectionCheck(app *config.Application) error {
 	if err == nil {
 		app.Logger.Println("Telegram authenticated. Username: ", user.UserName)
 	} else {
-		app.Logger.Println("Telegram authentication error: ", err)
+		// Panic is intentional because we dont want it to try making requests if it fails.
+		// And if connection loss is just temporary, then systemd will restart anyways.
+		app.Logger.Panicln("Telegram authentication error: ", err)
 	}
 	return err
 }
@@ -18,7 +20,7 @@ func ConnectionCheck(app *config.Application) error {
 func NewConnection(app *config.Application) *tgbotapi.BotAPI {
 	bot, err := tgbotapi.NewBotAPI(app.Config.TelegramBotToken)
 	if err != nil {
-		app.Logger.Fatalln("Telegram API connection error: ", err)
+		app.Logger.Panicln("Telegram API connection error: ", err)
 	}
 	bot.Debug = false
 	return bot

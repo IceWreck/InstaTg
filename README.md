@@ -26,9 +26,14 @@ There are two versions:
 
 You should probably run `cmd/app` as a background service while `cmd/historical` is a one-off.
 
+**_Note: You need Go to compile it or maybe you can grab pre-compiled builds from somewhere._**
+
+**_Note: The directory where you place the binaries must be user writeable._**
+
 Compile using `go build -o ./bin/instatg ./cmd/app`
 
-Then run
+
+#### From CLI
 
 ```bash
 $ ./instatg \
@@ -38,12 +43,6 @@ $ ./instatg \
       -igpass "yourpassword" \
       -igchan "exampleaccount"
 ```
-
-#### From CLI
-
-**_Note: You need Go to compile it or maybe you can grab pre-compiled builds from somewhere._**
-
-**_Note: The directory where you place the binaries must be user writeable._**
 
 ```
 Usage of instatg:
@@ -55,6 +54,8 @@ Usage of instatg:
         Your Instagram Password
   -iguser string
         Your Instagram Username
+  -rerun int
+        Interval (in minutes) after which the bot should check IG for more posts (default 15)
   -tgchannel int
         Telegram Channel ID
   -tgtoken string
@@ -70,6 +71,7 @@ Add service in `~/.config/systemd/user/instatg.service`
 Description=InstaTg Bot for Channel X
 
 [Service]
+Restart=always
 WorkingDirectory=/home/icewreck/somefolder
 ExecStart=/home/icewreck/somefolder/instatgapp \
                                     -tgtoken "XXXXX:YYYYY" \
