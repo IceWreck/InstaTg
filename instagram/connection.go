@@ -8,7 +8,7 @@ import (
 func ConnectionCheck(app *config.Application) error {
 	user := app.InstaBot.Account.Username
 	// random API call to check if everything is working
-	_, err := app.InstaBot.Profiles.ByName("facebook")
+	_, err := app.InstaBot.Profiles.ByName("instagram")
 	if err == nil {
 		app.Logger.Println("Instagram authenticated. Username: ", user)
 	} else {
